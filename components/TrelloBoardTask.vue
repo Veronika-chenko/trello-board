@@ -14,3 +14,24 @@ defineProps<{
         </span>
     </div>
 </template>
+
+<style>
+/* click and start drug */
+/* .sortable-chosen {
+    background: green;
+} */
+/* start moving */
+.sortable-drag .task {
+    /* background: red; */
+    transform: rotate(5deg);
+}
+
+.sortable-ghost .task {
+    /* background-color: blue; */
+    position: relative;
+}
+.sortable-ghost .task::after {
+    content: "";
+    @apply  absolute top-0 bottom-0 left-0 right-0 bg-slate-300 rounded
+}
+</style>
