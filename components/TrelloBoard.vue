@@ -1,7 +1,8 @@
 <script setup lang="ts">
 // ref automatically injected by Nuxt
-import type { Column } from '../types'
-import {nanoid} from "nanoid";
+import type { Column } from '../types';
+import draggable from 'vuedraggable';
+import { nanoid } from "nanoid";
 const columns = ref<Column[]>([
     {
         id: nanoid(),
@@ -48,10 +49,15 @@ const columns = ref<Column[]>([
 </script>
 
 <template>
-    <div class="flex gap-4 overflow-x-auto items-start">
-        <div v-for="column in columns" 
-        :key="column.id"
-        class="column bg-gray-200 p-5 rounded min-w-[250px]">
+    <div>
+        <draggable
+            v-model="columns"
+            group="columns"
+            item-key="id"
+            class="flex gap-4 overflow-x-auto items-start"
+        >
+        <template #item="{element: column}: {element: Column}">
+            <div  class="column bg-gray-200 p-5 rounded min-w-[250px]">
             <header class="font-bold mb-4">
                 {{ column.title }}
             </header>
@@ -63,6 +69,12 @@ const columns = ref<Column[]>([
             <footer>
                 <button class="text-gray-500">+ Add a Card</button>
             </footer>
-        </div>
+            </div>
+        </template>
+        </draggable>
+        
     </div>
+    <!-- <pre>{{ columns }}</pre> -->
 </template>
+<!-- group allows to drag and drop items between different list -->
+ <!-- item-key:  how to identify -->
