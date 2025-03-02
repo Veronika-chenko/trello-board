@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // ref automatically injected by Nuxt
-import type { Column } from '../types';
+import type { Column, Task } from '../types';
 import draggable from 'vuedraggable';
 import { nanoid } from "nanoid";
 const columns = ref<Column[]>([
@@ -64,11 +64,18 @@ const columns = ref<Column[]>([
                 <DragHandle/>
                 {{ column.title }}
             </header>
-            <TrelloBoardTask 
-                v-for="task in column.tasks" 
-                :key="task.id"
-                :task="task" 
-            />
+            <draggable
+                v-model="column.tasks"
+                group="tasks"
+                handle=".drag-handle"
+                :animation="150"
+                item-key="id"
+            >
+                <template #item="{element: task}: {element: Task}">
+                    <TrelloBoardTask :task="task" />
+                </template>  
+            </draggable>
+            
             <footer>
                 <button class="text-gray-500">+ Add a Card</button>
             </footer>
@@ -80,3 +87,8 @@ const columns = ref<Column[]>([
 </template>
 <!-- group allows to drag and drop items between different list -->
  <!-- item-key:  how to identify -->
+
+<!-- group prop: group="tasks" means: -->
+<!-- can drag tasks only between the task array of the current column 
+ and that of the other column -->
+<!-- if also name column: anable to drag task into the column array -->
