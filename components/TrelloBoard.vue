@@ -3,7 +3,8 @@
 import type { Column, Task } from '../types';
 import draggable from 'vuedraggable';
 import { nanoid } from "nanoid";
-const columns = ref<Column[]>([
+// can use useLocalStorageinstead of ref
+const columns = useLocalStorage<Column[]>("trelloBoard", [
     {
         id: nanoid(),
         title: "Backlog",
@@ -45,7 +46,21 @@ const columns = ref<Column[]>([
         title: "Completed",
         tasks: [],
     }
-]);
+],
+{
+    serializer: {
+        read: value => {
+            return JSON.parse(value).map((column: Column) => {
+                column.tasks = column.tasks.map((task: Task) => {
+                    task.createdAt = new Date(task.createdAt);
+                    return task;
+                })
+                return column;
+            })
+        },
+        write: value => JSON.stringify(value)
+    }
+});
 // key we want to listen to
 const alt = useKeyModifier("Alt")
 
@@ -64,8 +79,12 @@ function createColumn() {
             ) as HTMLInputElement
         ).focus()
     })
-    
+
 }
+// for services
+// watch(columns, () => {}, {
+//     deep: true
+// })
 </script>
 
 <template>
