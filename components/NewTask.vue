@@ -28,7 +28,7 @@ function createTask(e: Event) {
         v-model="title"
         @keydown.tab="createTask"
         @keyup.enter="createTask"
-        class="focus:bg=white focus:shadow resize-none rounded w-full border-none p-2"
+        class="bg-gray-200 focus:bg-white focus:shadow resize-none rounded w-full border-none p-2"
         :class="{
             'h-7': !focused,
             'h-20': focused
