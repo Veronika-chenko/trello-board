@@ -33,7 +33,7 @@ function createTask(e: Event) {
             'h-7': !focused,
             'h-20': focused
         }"
-        style="outline: none !important"
+        style="outline: none !important ; overflow: hidden;"
         @focus="focused = true"
         @blur="focused = false"
         :placeholder="!focused ? '+Add A Card' : 'Enter a title for this card'"

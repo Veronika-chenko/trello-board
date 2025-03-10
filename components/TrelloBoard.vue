@@ -88,7 +88,7 @@ function createColumn() {
 </script>
 
 <template>
-    <div class="flex items-start overflow-x-auto gap-4">
+    <div class="flex grow items-start overflow-x-auto gap-4">
         <draggable
             v-model="columns"
             group="columns"
